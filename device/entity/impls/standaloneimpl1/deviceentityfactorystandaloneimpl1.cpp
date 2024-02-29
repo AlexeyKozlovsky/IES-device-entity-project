@@ -24,20 +24,11 @@ std::shared_ptr<DeviceEntity> DeviceEntityFactoryStandaloneImpl1::createDeviceEn
     auto channel_delay_converter = std::make_shared<DiscreteValueConverter<uint64_t>>(25, 100, 25);
     auto channel_width_converter = std::make_shared<DiscreteValueConverter<uint64_t>>(25, 100, 25);
 
-    auto reg_card = std::make_shared<DeviceEntityRegCardImpl1>(modbus_wrapper,
-                                                               inner_start_period_converter,
-                                                               inner_start_width_converter,
-                                                               channel_delay_converter,
-                                                               channel_width_converter);
-    auto postponed_reg_card = std::make_shared<DeviceEntityRegCardImpl1>(modbus_wrapper,
-                                                                         inner_start_period_converter,
-                                                                         inner_start_width_converter,
-                                                                         channel_delay_converter,
-                                                                         channel_width_converter);
+    auto reg_card = std::make_shared<DeviceEntityRegCardImpl1>(modbus_wrapper);
 //      std::shared_ptr<DeviceEntityRegCardImpl1> postponed_reg_card = nullptr;
 
 
-    auto connected_state = std::make_shared<DeviceEntityConnectedStateStandaloneImpl1>(result, reg_card, postponed_reg_card);
+    auto connected_state = std::make_shared<DeviceEntityConnectedStateStandaloneImpl1>(result, reg_card);
     auto not_connected_state = std::make_shared<DeviceEntityNotConnectedStateStandaloneImpl1>();
 
     result->addState({CONNECTED, connected_state});
